@@ -1,0 +1,485 @@
+* {
+  padding: 0;
+  margin: 0 auto;
+  border: none;
+  box-sizing: border-box;
+  background-color: #F8F8F8;
+}
+
+body {
+  text-align: left;
+
+}
+
+.contentContainer {
+  display: flex;
+  border-bottom: 2px rgb(183, 179, 179) solid;
+  padding: 10px;
+  height: 40px;
+}
+
+.leftnavbarcontent {
+  display: flex;
+  margin-left: 10px;
+  gap: 20px;
+}
+
+.rightnavbarcontent {
+  display: flex;
+  width: 35%;
+  justify-content: flex-end;
+  margin: 0;
+}
+
+.navbarItem {
+  color: rgb(47, 146, 245);
+}
+
+.searchinput {
+  display: flex;
+  justify-content: space-around;
+  width: 50%;
+  border-radius: 10px;
+  position: relative;
+  align-items: center;
+}
+
+.search-input {
+  padding: 5px 40px 5px 40px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: rgba(207, 200, 200, 0.551);
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+}
+
+.icon-container {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  color: #717477;
+  background-color: rgba(207, 200, 200, 0.551);
+}
+
+.Loginpage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  width: 60%;
+}
+
+.Logindetails {
+  display: flex;
+  margin: 10px;
+  width: 100%;
+  background-color: #ffffff;
+}
+
+.Passwordandsubmit {
+  display: flex;
+  flex-direction: row;
+}
+
+.Logininput {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  gap: 10px;
+  margin-left: 70px;
+
+}
+
+.Logininput div {
+  margin: 10px;
+}
+
+.Loginbutton {
+  background-color: rgb(47, 146, 245);
+  margin-bottom: 35px;
+  color: white;
+  margin-left: -20px;
+}
+
+.buttondiv {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.borders {
+  border: 2px #D9D9D9 solid;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: white;
+}
+
+.Logininputdivs {
+  background-color: #ffffff;
+}
+
+.inputmainpages {
+  color: #8D8D8D;
+  background-color: white;
+}
+
+.inputHeadings {
+  margin-left: 10px;
+  font-weight: 600;
+}
+
+.footerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 0px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.line {
+  height: 7px;
+  width: 60%;
+  background-color: black;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.homePageImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.homeIput {
+  display: flex;
+  margin: 25px;
+  background-color: #ffffff;
+}
+
+
+.searchInput {
+  width: 80%;
+  display: flex;
+  gap: 10px;
+  background-color: #ffffff;
+  flex-direction: column;
+  padding: 30px;
+  margin: 0;
+}
+
+.searchButton {
+  background-color: rgb(47, 146, 245);
+  color: white;
+  margin-bottom: 35px;
+
+}
+
+.searchbuttondiv {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background-color: white;
+}
+
+.HomepageInput {
+  width: 100%;
+}
+
+h1 {
+  background-color: white;
+  margin: 0;
+  font-size: 32;
+  font-weight: 600;
+}
+
+.InspectionsArea {
+  display: flex;
+  margin: 25px;
+  gap: 15px;
+}
+
+.clickableInspections {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 50%;
+  height: 100%;
+}
+
+.homePageIcon {
+  width: 10%;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin: 0;
+  background-color: white;
+}
+
+.homeicon {
+  background-color: #F8F8F8;
+  color: #8D8D8D;
+  font-size: 40px;
+  margin: 0;
+}
+.DataclickableInspectionsdiv {
+  display: flex;
+  background-color: white;
+  padding: 50px;
+  width: 100%;
+  flex-direction: column;
+}
+
+.seeableInspectionsOnHomepagae {
+  flex-direction: column;
+  gap: 10px;
+  display: flex;
+  background-color: white;
+  padding: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.showEntries {
+  background-color: #F8F8F8;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: 400;
+}
+
+.Entryshower {
+  width: 50%;
+  padding: 50px;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.HomepageHeadingtext {
+  width: 90%;
+}
+
+.HomepageHeadingtextparagraph {
+  background-color: white;
+}
+
+.AItopImage {
+  display: flex;
+  margin: 20px;
+  padding: 10px;
+}
+
+.AIbutton {
+  color: black;
+  margin-bottom: 35px;
+  background-color: white;
+
+}
+
+.AIInputMain {
+  display: flex;
+  background-color: white;
+  margin: 20px;
+  width: 70%;
+}
+
+.AIEntryshower {
+  width: 100%;
+  padding: 50px;
+  max-height: 100vh;
+  background-color: white;
+  overflow: hidden;
+}
+
+.AIlogoImgae {
+  margin: 0;
+  width: 80%;
+}
+
+.AIsearchbuttondiv {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.AIhomeIput {
+  margin: 25px;
+  background-color: #ffffff;
+  padding: 10px;
+}
+
+.AIpageHeadingtext {
+  padding: 20px;
+}
+
+.DominateinputHeadings {
+  width: 50%;
+}
+
+.AIinputContainer {
+  position: relative;
+  background-color: white;
+}
+
+.AIinputIcon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: #8D8D8D;
+}
+
+.Datenmain {
+  display: flex;
+  gap: 20px;
+  padding: 10px;
+}
+
+.Datenbigdiv {
+  width: 80%;
+  padding: 10px;
+}
+
+.DatenclickableInspections {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.DatenLogininput {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  background-color: #ffffff;
+  height: 100%;
+}
+.DataLogininputdivs {
+  background-color: #ffffff;
+  width: 100%;
+  padding: 5px;
+}
+.DataStreetdiv{
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}
+.DataStreetdiv1{
+  width: 80%;
+  margin: 0;
+}
+.DataStreetdiv2{
+width: 20%;
+}
+.clickableInspectionsdiv {
+  display: flex;
+  background-color: white;
+  padding: 50px;
+  width: 100%;
+}
+
+
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal content */
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 600px;
+  position: relative;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  background-color: #F8F8F8;
+  color: #8D8D8D;
+  margin: 0;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 600px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-modal {
+  cursor: pointer;
+  font-size: 24px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
