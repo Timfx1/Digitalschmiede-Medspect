@@ -20,6 +20,9 @@ export default function UnternehmenDetailseite() {
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen);
     };
+    const handleNavigateInspektionsmodule = () => {
+        window.location.href = "/Inspektionsmodule";
+    };
 
     // Define the initial state for checklists
     const [checklists, setChecklists] = useState([
@@ -199,7 +202,8 @@ export default function UnternehmenDetailseite() {
                     <div className="borders clickableInspectionsdiv">
                         <h1 className="HomepageHeadingtext">Aktive <p className="HomepageHeadingtextparagraph">Inspektion öffnen</p></h1>
                         <div className="homePageIcon">
-                            <FiArrowUpRight className="homeicon" />
+                            <FiArrowUpRight className="homeicon"   onClick={handleNavigateInspektionsmodule} 
+                            />
                         </div>
                     </div>
                     <div className="borders DataclickableInspectionsdiv">

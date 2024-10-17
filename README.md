@@ -11,3 +11,6 @@ Currently, two official plugins are available:
 **more commands**
 npm i react-router-dom
 npm install react-icons
+npx create-react-app pdf-export-demo
+npm install @react-pdf-viewer/core @react-pdf-viewer/print react-to-print
+

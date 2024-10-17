@@ -2,8 +2,7 @@ import Navbar from "./navbar"
 import Footer from "./Footers"
 import "../App.css";
 import { AiOutlinePlus, AiOutlineClockCircle } from 'react-icons/ai';
-
-
+import { FaSignOutAlt } from 'react-icons/fa';
 
 export default function home() {
 
@@ -14,12 +13,21 @@ export default function home() {
     const CompanyDeatils = () => {
         window.location.href = "/UnternehmenDetailseite";
     };
+    const handleNavigateLog = () => {
+        window.location.href = "/";
+    };
 
     return (
         <>
             <Navbar />
             <div className="homePageImage">
                 <img src="./src/Image/Full Logo Medspect.png" alt="Logo" className="logoImgae" />
+
+                <div className="newButtonAbsolute">
+                    <button onClick={handleNavigateLog} className="AIbutton">Logout <FaSignOutAlt /></button>
+                </div>
+
+
             </div>
 
             <div className=" homeIput borders" >

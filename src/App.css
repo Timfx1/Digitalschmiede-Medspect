@@ -483,3 +483,43 @@ th {
   background-color: #f2f2f2;
 }
 
+.newButtonRelative{
+  position: relative;
+}
+.newButtonAbsolute{ 
+  position: absolute;
+  right: 70px;
+}
+
+
+form div {
+  margin-bottom: 10px;
+}
+
+form label {
+  margin-right: 10px;
+}
+
+form input, form textarea {
+  width: 300px;
+}
+
+.button {
+  padding: 10px 20px;
+  background-color: rgb(47, 146, 245);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 30px;
+ 
+}
+
+.sidePicturePrint{
+  display: flex;
+}
+.sidepicturePrintImage{
+  width: 10%;
+  margin: 0;
+  padding: 50px ;
+}
