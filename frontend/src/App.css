@@ -8,6 +8,8 @@
 
 body {
   text-align: left;
+  font-size: 16px;           /* Adjust this value to increase font size */
+  color: black;         
 
 }
 
@@ -15,24 +17,26 @@ body {
   display: flex;
   border-bottom: 2px rgb(183, 179, 179) solid;
   padding: 10px;
-  height: 40px;
+  height: 40px; 
 }
 
 .leftnavbarcontent {
   display: flex;
+  flex-grow: 1;  /* Allows it to take the remaining space */
   margin-left: 10px;
   gap: 20px;
 }
 
 .rightnavbarcontent {
   display: flex;
-  width: 35%;
-  justify-content: flex-end;
-  margin: 0;
+  width: 35%;  /* This width can be adjusted */
+  justify-content: flex-end; 
 }
 
 .navbarItem {
   color: rgb(47, 146, 245);
+  font-size: 18px;      
+  /* Add padding or margin as needed */
 }
 
 .searchinput {
@@ -107,11 +111,25 @@ body {
 }
 
 .Loginbutton {
+  font-size: 20px;  
+  padding: 10px 20px;
   background-color: rgb(47, 146, 245);
-  margin-bottom: 35px;
+  margin-bottom: 30px;
   color: white;
-  margin-left: -20px;
+  margin-left: -30px;
+  border-radius: 5px;
+  cursor: pointer; 
+
 }
+
+
+
+  
+
+
+
+
+
 
 .buttondiv {
   display: flex;
@@ -169,7 +187,7 @@ body {
   margin-bottom: 20px;
 }
 
-.homeIput {
+.homeInput {
   display: flex;
   margin: 25px;
   background-color: #ffffff;
@@ -187,11 +205,21 @@ body {
 }
 
 .searchButton {
+  font-size: 25px;  
+  padding: 10px 20px;
+  border-radius: 5px;
   background-color: rgb(47, 146, 245);
   color: white;
-  margin-bottom: 35px;
+  margin-bottom: 25px;
+  margin-left: -80px; 
+  cursor: pointer; 
 
 }
+
+
+
+
+
 
 .searchbuttondiv {
   display: flex;
@@ -483,43 +511,3 @@ th {
   background-color: #f2f2f2;
 }
 
-.newButtonRelative{
-  position: relative;
-}
-.newButtonAbsolute{ 
-  position: absolute;
-  right: 70px;
-}
-
-
-form div {
-  margin-bottom: 10px;
-}
-
-form label {
-  margin-right: 10px;
-}
-
-form input, form textarea {
-  width: 300px;
-}
-
-.button {
-  padding: 10px 20px;
-  background-color: rgb(47, 146, 245);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 30px;
- 
-}
-
-.sidePicturePrint{
-  display: flex;
-}
-.sidepicturePrintImage{
-  width: 10%;
-  margin: 0;
-  padding: 50px ;
-}
