@@ -60,7 +60,7 @@ const Home = () => {
   // Render suggestions
   const renderSuggestion = (suggestion) => (
     <div>
-      {suggestion.name}
+      {suggestion.name} ({suggestion.aktenzeichen}) {suggestion.address}
     </div>
   );
 
@@ -99,7 +99,19 @@ const Home = () => {
 
 
       <div className="searchbuttondiv">
-          <button className="searchButton" onClick={() => navigate(`/company/${suggestions[0]?.id}`)}>Suche</button>
+
+      <button 
+            className="searchButton" 
+            onClick={() => {
+                // Navigate to the first suggestion if it exists
+                if (suggestions.length > 0) {
+                    navigate(`/company/${suggestions[0]?.id}`);
+                }
+            }}
+        >
+            Suche
+        </button>
+          {/* <button className="searchButton" onClick={() => navigate(`/company/${suggestions[0]?.id}`)}>Suche</button> */}
         </div>
       </div>
 

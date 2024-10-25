@@ -1,182 +1,785 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+
+import { useParams } from 'react-router-dom'; // Import useParams if using URL parameters
 import axios from 'axios';
+import Navbar from './Navbar'; 
+import Footer from './Footers';
+import logo from './image/Logo.png'; 
+
 
 const NewInspection = () => {
+  // State to hold list of companies and selected company details
+  const [companies, setCompanies] = useState([]); // List of companies fetched from backend
+  const [selectedCompany, setSelectedCompany] = useState(''); // Selected company name
+  const [aktenzeichen, setAktenzeichen] = useState(''); // Aktenzeichen associated with the selected company
+  
   // State to hold the form data for inspection details
   const [inspectionData, setInspectionData] = useState({
-    company: '',
     inspection_date: '',
     inspector_name: '',
-    notes: '',
-    authority: '',        // New fields for authority, introduction, and other sections
+    team_lead: '',
+    additional_inspectors: '',
+    authority: '',
+    reference_number: '',
     introduction: '',
+    smf_info: '',
     previous_inspection: '',
-    personnel: '',
     findings: '',
-    active_substances: '', // Checkbox for the list of active substances
-    conclusion: '',
+    active_substances: '',
+    conclusions: '',
+    quality_management: '',
+    personnel: '',
+    equipment: '',
+    documentation: '',
+    production: '',
+    quality_control: '',
+    contract_testing: '',
+    complaints: '',
+    self_inspection: '',
+    storage: '',
+    other_aspects: '',
+    site_description: '',
+    samples_taken: '',
+    critical_errors: '',
+    serious_errors: '',
+    other_errors: '',
+    remarks: '',
   });
 
-  // Handle input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInspectionData({ ...inspectionData, [name]: value });
-  };
-
-  // Save inspection data to backend
-  const handleSave = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post('http://127.0.0.1:8000/api/inspections/', inspectionData);
-      alert('Inspection data saved successfully!');
-    } catch (error) {
-      console.error('Error saving inspection data', error);
-    }
-  };
-
-  // Download the report as DOCX
-  const handleDownload = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/api/generate-inspection-doc/', inspectionData, {
-        responseType: 'blob',
+  // Fetch the company list when the component is mounted
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/companies/') // Replace with your backend URL
+      .then(response => {
+        setCompanies(response.data); // Assuming the response returns a list of companies
+      })
+      .catch(error => {
+        console.error('Error fetching companies:', error);
       });
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'GMP_Inspektionsbericht.docx');
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    } catch (error) {
-      console.error('Error generating report', error);
+  }, []);
+
+  // Handle the company selection from the dropdown
+  const handleCompanyChange = (e) => {
+    const companyName = e.target.value;
+    setSelectedCompany(companyName);
+
+    // Find the Aktenzeichen of the selected company
+    const company = companies.find(c => c.company_name === companyName);
+    if (company) {
+      setAktenzeichen(company.aktenzeichen); // Set the Aktenzeichen
     }
   };
+
+  // Handle form field change for inspection data
+  const handleChange = (e) => {
+    setInspectionData({
+      ...inspectionData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  // Handle form submission to create a new inspection
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Include the selected company's Aktenzeichen with the inspection data
+    const newInspection = {
+      ...inspectionData,
+      aktenzeichen // Pass the Aktenzeichen to link the inspection to the company
+    };
+
+    // Submit the inspection data to the backend
+    axios.post('http://localhost:8000/api/inspections/', newInspection) // Replace with your backend URL
+      .then(response => {
+        console.log('Inspection created successfully:', response.data);
+      })
+      .catch(error => {
+        console.error('Error creating inspection:', error);
+      });
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const NewInspection = () => {
+//   //const { companyId } = useParams(); // Get companyId from URL parameters
+//   // State to hold the form data for inspection details
+  
+//   const [inspectionData, setInspectionData] = useState({
+//     inspection_date: '',
+//     inspector_name: '',
+//     team_lead: '',
+//     additional_inspectors: '',
+//     authority: '',
+//     reference_number: '',
+//     introduction: '',
+//     smf_info: '',
+//     previous_inspection: '',
+//     findings: '',
+//     active_substances: '',
+//     conclusions: '',
+//     quality_management: '',
+//     personnel: '',
+//     equipment: '',
+//     documentation: '',
+//     production: '',
+//     quality_control: '',
+//     contract_testing: '',
+//     complaints: '',
+//     self_inspection: '',
+//     storage: '',
+//     other_aspects: '',
+//     site_description: '',
+//     samples_taken: '',
+   
+//     critical_errors: '',
+//     serious_errors: '',
+//     other_errors: '',
+//     remarks: '',
+//   });
+
+
+  
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+    
+//     // Update the specific field in the state using the name as the key
+//     setInspectionData({
+//       ...inspectionData,
+//       [name]: value,
+//     });
+//   };
+  
+
+//   // Handle form submission to save inspection data
+// const handleSave = async (e) => {
+//   e.preventDefault(); // Prevent default form submission
+
+//   try {
+//     const response = await axios.post('http://127.0.0.1:8000/api/inspections/', inspectionData); // Send a POST request to the backend
+//     if (response.status === 201) {
+//       alert('Inspection created and saved successfully!'); // Notify the user on success
+//       // Optionally reset the form or redirect
+//       setInspectionData({
+//         inspection_date: '',
+//         inspector_name: '',
+//         team_lead: '',
+//         additional_inspectors: '',
+//         authority: '',
+//         reference_number: '',
+//         introduction: '',
+//         smf_info: '',
+//         previous_inspection: '',
+//         findings: '',
+//         active_substances: '',
+//         conclusions: '',
+//         quality_management: '',
+//         personnel: '',
+//         equipment: '',
+//         documentation: '',
+//         production: '',
+//         quality_control: '',
+//         contract_testing: '',
+//         complaints: '',
+//         self_inspection: '',
+//         storage: '',
+//         other_aspects: '',
+//         site_description: '',
+//         samples_taken: '',
+//         critical_errors: '',
+//         serious_errors: '',
+//         other_errors: '',
+//         remarks: '',
+//       });
+//     } else {
+//       alert('Something went wrong while saving the inspection!');
+//     }
+//   } catch (error) {
+//     console.error('Error creating inspection!', error);
+//     alert('Error creating inspection! Please try again.');
+//   }
+// };
+
+// // Download the report as DOCX
+// const handleDownload = async (e) => {
+//   e.preventDefault(); // Prevent default form behavior
+
+//   try {
+//     const response = await axios.post(
+//       'http://127.0.0.1:8000/api/generate-inspection-doc/', 
+//       inspectionData, 
+//       { responseType: 'blob' }  // Indicating that we're expecting binary data (blob)
+//     );
+
+//     // Create a URL for the downloaded file
+//     const url = window.URL.createObjectURL(new Blob([response.data]));
+
+//     // Create a temporary anchor element
+//     const link = document.createElement('a');
+//     link.href = url;
+//     link.setAttribute('download', 'GMP_Inspektionsbericht.docx'); // Name of the downloaded file
+
+//     // Append the anchor to the document and trigger the download
+//     document.body.appendChild(link);
+//     link.click();
+
+//     // Clean up by removing the temporary link element
+//     link.remove();
+
+//   } catch (error) {
+//     console.error('Error generating report', error);
+//     alert('Error generating report. Please try again.');
+//   }
+// };
+
+
+// // Handle form submission to save inspection data
+//   const handleSave = async (e) => {
+//     e.preventDefault(); // Prevent default form submission
+//     try {
+//       await axios.post('http://127.0.0.1:8000/api/inspections/', inspectionData); // Save to the backend
+//       alert('Inspection created and saved successfully!'); // Notify the user
+//     } catch (error) {
+//       console.error('Error creating inspection!', error); // Log any errors
+//     }
+//   };
+
+
+
+
+  // // Save inspection data to backend
+  // const handleSave = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await axios.post('http://127.0.0.1:8000/api/inspections/', inspectionData);
+  //     alert('Inspection data saved successfully!');
+
+
+
+
+  //     // Now generate the inspection document
+  //     const response = await axios.post('http://127.0.0.1:8000/api/generate-inspection-doc/', inspectionData, {
+  //       responseType: 'blob',  // Important for handling file downloads
+  //   });
+
+
+  //    // Create a link to download the file
+  //    const url = window.URL.createObjectURL(new Blob([response.data]));
+  //    const link = document.createElement('a');
+  //    link.href = url;
+  //    link.setAttribute('download', 'inspection_report.docx'); // Specify the file name
+  //    document.body.appendChild(link);
+  //    link.click();
+  //    link.remove();
+
+
+  // // Download the report as DOCX
+  // const handleDownload = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.post('http://127.0.0.1:8000/api/generate-inspection-doc/', inspectionData, {
+  //       responseType: 'blob',
+  //     });
+  //     const url = window.URL.createObjectURL(new Blob([response.data]));
+  //     const link = document.createElement('a');
+  //     link.href = url;
+  //     link.setAttribute('download', 'GMP_Inspektionsbericht.docx');
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     link.remove();
+  //   } catch (error) {
+  //     console.error('Error generating report', error);
+  //   }
+  // };
+
+
+
 
   return (
+    
     <div>
-      <h1>Create New GMP Inspection</h1>
-      <form onSubmit={handleSave}>
-        {/* Basic Information */}
+        <Navbar />
+        <div className="AItopImage">
+                <div className="AIlogoImgae">
+                <img src={logo} alt="Logo" className="logoImage" />
+                <div><h1 className="grey">betriebsübersicht</h1></div>
+                </div>
+             </div>
+
+
+             <form onSubmit={handleSubmit}>
+        {/* Company selection dropdown */}
         <div>
-          <label>
-            Company ID:
-            <input
-              type="text"
-              name="company"
-              value={inspectionData.company}
-              onChange={handleChange}
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Inspection Date:
-            <input
-              type="date"
-              name="inspection_date"
-              value={inspectionData.inspection_date}
-              onChange={handleChange}
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Inspector Name:
-            <input
-              type="text"
-              name="inspector_name"
-              value={inspectionData.inspector_name}
-              onChange={handleChange}
-              required
-            />
-          </label>
+          <label>Company Name:</label>
+          <select value={selectedCompany} onChange={handleCompanyChange}>
+            <option value="">Select a company</option>
+            {companies.map(company => (
+              <option key={company.id} value={company.company_name}>
+                {company.company_name}
+              </option>
+            ))}
+          </select>
         </div>
 
-        {/* Inspector and Authority Sections */}
-        <div>
-          <label>
-            Authority:
-            <textarea
-              name="authority"
-              value={inspectionData.authority}
-              onChange={handleChange}
-              placeholder="Bezeichnung der zuständigen Behörde"
-            />
-          </label>
-        </div>
 
-        {/* Introduction Section */}
-        <div>
-          <label>
-            Introduction:
-            <textarea
-              name="introduction"
-              value={inspectionData.introduction}
-              onChange={handleChange}
-              placeholder="Kurzbeschreibung des Unternehmens"
-            />
-          </label>
-        </div>
 
-        {/* Non-EU Inspection and Previous Inspection Sections */}
-        <div>
-          <label>
-            Previous Inspection:
-            <textarea
-              name="previous_inspection"
-              value={inspectionData.previous_inspection}
-              onChange={handleChange}
-              placeholder="Bericht über vorhergehende Inspektion"
-            />
-          </label>
-        </div>
+     
+     
 
-        {/* Active Substances Section */}
-        <div>
-          <label>
-            Findings and Observations:
-            <textarea
-              name="findings"
-              value={inspectionData.findings}
-              onChange={handleChange}
-              placeholder="Feststellungen und Beobachtungen des Inspektionsteams"
-            />
-          </label>
-        </div>
+{/* Inspector Name */}
+<div className="findings-section">
+  <label>
+    Inspector Name:
+    <input
+      type="text"
+      name="inspector_name"
+      value={inspectionData.inspector_name}
+      onChange={handleChange}
+      required
+      className="findings-input" // Optional: Add a class for consistent styling
+    />
+  </label>
+</div>
 
-        <div>
-          <label>
-            Active Substances (select applicable):
-            <textarea
-              name="active_substances"
-              value={inspectionData.active_substances}
-              onChange={handleChange}
-              placeholder="chemisch synthetisierte Wirkstoffe, Wirkstoffe menschlicher Herkunft, etc."
-            />
-          </label>
-        </div>
 
-        {/* Conclusion Section */}
-        <div>
-          <label>
-            Conclusion:
-            <textarea
-              name="conclusion"
-              value={inspectionData.conclusion}
-              onChange={handleChange}
-              placeholder="Zusammenfassung und Schlussfolgerungen"
-            />
-          </label>
-        </div>
+         {/* Team and Authority Info */}
+<div className="findings-section">
+  <h2>Inspector Team and Authority Info</h2>
 
-        {/* Save and Download Buttons */}
-        <button type="submit">Save Inspection</button>
-        <button onClick={handleDownload}>Download Report</button>
-      </form>
+  {/* Team Lead Name */}
+  <label>
+    Team Lead Name:
+    <input
+      type="text"
+      name="team_lead"
+      value={inspectionData.team_lead}
+      onChange={handleChange}
+      className="findings-input" // Optional: Add a class for consistent styling
+    />
+  </label>
+
+  {/* Additional Inspectors */}
+  <div className="findings-section">
+    <label>
+      Additional Inspectors:
+      <textarea
+        name="additional_inspectors"
+        value={inspectionData.additional_inspectors}
+        onChange={handleChange}
+        placeholder="List of other inspectors involved"
+        className="findings-textarea" // Ensures consistent textarea styling
+      />
+    </label>
+  </div>
+</div>
+
+           {/* Authority Name */}
+<div className="findings-section">
+  <label>
+    Authority Name:
+    <textarea
+      name="authority"
+      value={inspectionData.authority}
+      onChange={handleChange}
+      placeholder="Bezeichnung der zuständigen Behörde"
+      className="findings-textarea" // Ensures consistent textarea styling
+    />
+  </label>
+</div>
+
+
+         {/* Reference Number */}
+<div className="findings-section">
+  <label>
+    Reference Number:
+    <input
+      type="text"
+      name="reference_number"
+      value={inspectionData.reference_number}
+      onChange={handleChange}
+      placeholder="Zulassungsnummer or Herstellungserlaubnis"
+      className="findings-input" // Ensures consistent input styling
+    />
+  </label>
+</div>
+
+
+        {/* Introduction */}
+<div className="findings-section">
+  <h2>Introduction</h2>
+  <label>
+    Introduction Text:
+    <textarea
+      name="introduction"
+      value={inspectionData.introduction}
+      onChange={(e) =>
+        setInspectionData({
+          ...inspectionData,
+          introduction: e.target.value,
+        })
+      }
+      placeholder="Short company introduction"
+      className="findings-textarea"
+    />
+  </label>
+</div>
+
+
+        <div className="findings-section">
+  <label className="findings-label">SMF Information:</label>
+  <textarea
+    name="smf_info"
+    value={inspectionData.smf_info}
+    onChange={handleChange}
+    placeholder="SMF info, version and approval date"
+    className="findings-textarea"
+  />
+</div>
+
+
+<div className="findings-section">
+  <label>
+    Quality Management:
+    <textarea
+      name="quality_management"
+      value={inspectionData.quality_management}
+      onChange={handleChange}
+      placeholder="Details about quality management"
+      className="findings-textarea"
+    />
+  </label>
+</div>
+
+<div className="findings-section">
+  <label>
+    Personnel:
+    <textarea
+      name="personnel"
+      value={inspectionData.personnel}
+      onChange={handleChange}
+      placeholder="Details about personnel"
+      className="findings-textarea"
+    />
+  </label>
+</div>
+
+<div className="findings-section">
+  <label>
+    Equipment:
+    <textarea
+      name="equipment"
+      value={inspectionData.equipment}
+      onChange={handleChange}
+      placeholder="Details about equipment"
+      className="findings-textarea"
+    />
+  </label>
+</div>
+
+
+<div className="findings-section">
+  <label>
+    Documentation:
+    <textarea
+      name="documentation"
+      value={inspectionData.documentation}
+      onChange={handleChange}
+      placeholder="Details about documentation"
+      className="findings-textarea"
+    />
+  </label>
+</div>
+
+<div className="findings-section">
+  <label>
+    Production:
+    <textarea
+      name="production"
+      value={inspectionData.production}
+      onChange={handleChange}
+      placeholder="Details about production"
+      className="findings-textarea"
+    />
+  </label>
+</div>
+
+
+
+
+
+
+
+<div className="findings-section">
+  <label>
+    Quality Control:
+    <textarea
+      name="quality_control"
+      value={inspectionData.quality_control}
+      onChange={handleChange}
+      placeholder="Details about quality control"
+      className="findings-textarea"
+    />
+  </label>
+</div>
+
+<div className="findings-section">
+  <label>
+    Contract Testing:
+    <textarea
+      name="contract_testing"
+      value={inspectionData.contract_testing}
+      onChange={handleChange}
+      placeholder="Details about contract testing"
+      className="findings-textarea"
+    />
+  </label>
+</div>
+
+<div className="findings-section">
+  <label>
+    Complaints:
+    <textarea
+      name="complaints"
+      value={inspectionData.complaints}
+      onChange={handleChange}
+      placeholder="Details about complaints"
+      className="findings-textarea"
+    />
+  </label>
+</div>
+
+<div className="findings-section">
+  <label>
+    Self Inspection:
+    <textarea
+      name="self_inspection"
+      value={inspectionData.self_inspection}
+      onChange={handleChange}
+      placeholder="Details about self inspection"
+      className="findings-textarea"
+    />
+  </label>
+</div>
+
+<div className="findings-section">
+  <label>
+    Storage:
+    <textarea
+      name="storage"
+      value={inspectionData.storage}
+      onChange={handleChange}
+      placeholder="Details about storage"
+      className="findings-textarea"
+    />
+  </label>
+</div>
+
+<div className="findings-section">
+  <label>
+    Other Aspects:
+    <textarea
+      name="other_aspects"
+      value={inspectionData.other_aspects}
+      onChange={handleChange}
+      placeholder="Other relevant aspects"
+      className="findings-textarea"
+    />
+  </label>
+</div>
+
+<div className="findings-section">
+  <label>
+    Site Description:
+    <textarea
+      name="site_description"
+      value={inspectionData.site_description}
+      onChange={handleChange}
+      placeholder="Description of the site"
+      className="findings-textarea"
+    />
+  </label>
+</div>
+
+<div className="findings-section">
+  <label>
+    Samples Taken:
+    <textarea
+      name="samples_taken"
+      value={inspectionData.samples_taken}
+      onChange={handleChange}
+      placeholder="Details of samples taken during the inspection"
+      className="findings-textarea"
+    />
+  </label>
+</div>
+
+<div className="findings-section">
+  <label>
+    Previous Inspection:
+    <textarea
+      name="previous_inspection"
+      value={inspectionData.previous_inspection}
+      onChange={handleChange}
+      placeholder="Details about previous inspection"
+      className="findings-textarea"
+    />
+  </label>
+</div>
+
+
+
+
+
+
+
+  {/* Active Substances Section */}
+  <div className="findings-section">
+  <label>
+    Findings and Observations:
+    <textarea
+      name="findings"
+      value={inspectionData.findings}
+      onChange={handleChange}
+      placeholder="Feststellungen und Beobachtungen des Inspektionsteams"
+      className="findings-textarea" // Ensures consistent textarea styling
+    />
+  </label>
+</div>
+
+<div className="findings-section">
+  <label>
+    Active Substances (select applicable):
+    <textarea
+      name="active_substances"
+      value={inspectionData.active_substances}
+      onChange={handleChange}
+      placeholder="chemisch synthetisierte Wirkstoffe, Wirkstoffe menschlicher Herkunft, etc."
+      className="findings-textarea" // Ensures consistent textarea styling
+    />
+  </label>
+</div>
+
+
+       
+
+{/* Conclusion Section */}
+<div className="findings-section">
+  <label>
+    Conclusions:
+    <textarea
+      name="conclusion"
+      value={inspectionData.conclusion}
+      onChange={handleChange}
+      placeholder="Zusammenfassung und Schlussfolgerungen"
+      className="findings-textarea" // Ensures consistent textarea styling
+    />
+  </label>
+</div>
+          {/* <div>
+  <h2>Summary of Findings</h2>
+  {Object.keys(inspectionData.findings_summary).map((section, index) => (
+    <div key={index} className="findings-section">
+      <label className="findings-label">{section.replace('_', ' ')}:</label>
+      <textarea
+        name={section}
+        value={inspectionData.findings_summary[section]}
+        onChange={(e) =>
+          setInspectionData({
+            ...inspectionData,
+            findings_summary: { ...inspectionData.findings_summary, [section]: e.target.value },
+          })
+        }
+        placeholder={`Details for ${section.replace('_', ' ')}`}
+        className="findings-textarea"
+      />
     </div>
+  ))}
+</div> */}
+
+{/* Critical Errors */}
+<div className="findings-section">
+    <label className="findings-label">Critical Errors:</label>
+    <textarea
+      name="critical_errors"
+      value={inspectionData.critical_errors}
+      onChange={handleChange}
+      placeholder="Details of critical errors"
+      className="findings-textarea"
+    />
+  </div>
+  
+  {/* Serious Errors */}
+  <div className="findings-section">
+    <label className="findings-label">Serious Errors:</label>
+    <textarea
+      name="serious_errors"
+      value={inspectionData.serious_errors}
+      onChange={handleChange}
+      placeholder="Details of serious errors"
+      className="findings-textarea"
+    />
+  </div>
+
+          
+{/* Other Errors */}
+<div className="findings-section">
+    <label className="findings-label">Other Errors:</label>
+    <textarea
+      name="other_errors"
+      value={inspectionData.other_errors}
+      onChange={handleChange}
+      placeholder="Details of other errors"
+      className="findings-textarea"
+    />
+  </div>
+
+
+{/* Remarks */}
+<div className="findings-section">
+    <label className="findings-label">Remarks:</label>
+    <textarea
+      name="remarks"
+      value={inspectionData.remarks}
+      onChange={handleChange}
+      placeholder="Additional remarks"
+      className="findings-textarea"
+    />
+  </div>
+
+
+
+{/* Non-EU Inspection and Previous Inspection Sections
+<div className="findings-section">
+  <label>
+    Previous Inspection:
+    <textarea
+      name="previous_inspection"
+      value={inspectionData.previous_inspection}
+      onChange={handleChange}
+      placeholder="Bericht über vorhergehende Inspektion"
+      className="findings-textarea" // Ensures consistent textarea styling
+    />
+  </label>
+</div> */}
+
+     
+
+        
+{/* Submit button */}
+<button type="submit">Create Inspection</button>
+      </form>
+      <Footer />
+    </div>
+    
   );
 };
 

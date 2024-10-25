@@ -7,7 +7,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "../App.css";
 import { FaArrowRight } from 'react-icons/fa';
-import logo from './image/Logo2.png'; 
+import logo from './image/Logo.png'; 
 import { AiOutlinePlus } from 'react-icons/ai';
 import { BiCube } from 'react-icons/bi';
 import { FiArrowUpRight } from 'react-icons/fi'; // Import for FiArrowUpRight
@@ -57,9 +57,20 @@ const CompanyDetail = () => {
             });
     }, [id]);
 
+    // const handleCreateInspection = (companyId) => {
+    //     navigate(`/new-inspection?companyId=${companyId}`); // Pass the company ID as a query parameter
+    // };
+
+    // Function to handle creating a new inspection
     const handleCreateInspection = () => {
-        navigate('/new-inspection'); // Navigate to the new inspection page
+        if (company && company.aktenzeichen) {
+            // Navigate to the new inspection page with the company aktenzeichen
+            navigate(`/new-inspection?aktenzeichen=${company.aktenzeichen}`);
+        } else {
+            console.error('Aktenzeichen is not available');
+        }
     };
+
 
     const handleCheckboxChange = (index, field, subIndex = null) => {
         const newChecklists = [...checklists];
@@ -85,17 +96,30 @@ const CompanyDetail = () => {
           <div className="AItopImage">
                 <div className="AIlogoImgae">
                 <img src={logo} alt="Logo" className="logoImage" />
-                </div>
-                <div className="AIsearchbuttondiv">
-                    <button onClick={handleNavigate} className="AIbutton">Back Home <FaArrowRight /></button>
-                </div>
+                <div><h1 className="grey">{company.name}</h1></div>
                 </div>
 
-                <div className="company-detail-container"> {/* Main container for both halves */}
-                <div className="left-half"> {/* Left content wrapper */}           
+               
+
+
+
+                <div className="AIsearchbuttondiv">
+  <button onClick={handleNavigate} className="AIbutton">
+    Back Home <FaArrowRight className="AIarrowIcon" />
+  </button>
+</div>
+
+
+
+                </div>
+
+               
+                <div class="flex-container">
+                    <div className="right_screen">
+
                 <div className="DatenLogininput">
     {/* Company Name */}
-    <h1 className="Logininputdivs">{company.name}</h1>
+    {/* <h1 className="Logininputdivs">{company.name}</h1> */}
     {/* Company Details */}
     <div className="DataLogininputdivs">
         <p className="Logininputdivs inputHeadings">Aktenzeichen</p>
@@ -109,7 +133,7 @@ const CompanyDetail = () => {
         </div>
     </div>
 
-    <div className="DataLogininputdivs">
+    {/* <div className="DataLogininputdivs">
         <p className="Logininputdivs inputHeadings">Benutzername</p>
         <div className="borders">
             <input 
@@ -119,7 +143,7 @@ const CompanyDetail = () => {
                 readOnly 
             />
         </div>
-    </div>
+    </div> */}
 
     <div className="DataLogininputdivs DataStreetdiv">
         <div className="DataStreetdiv1">
@@ -146,7 +170,8 @@ const CompanyDetail = () => {
         </div>
     </div>
 
-    <div className="DataLogininputdivs">
+    <div className="DataLogininputdivs DataPostzahlLand">
+    <div className="DataPostzahldiv">
         <p className="Logininputdivs inputHeadings">Postzahl</p>
         <div className="borders">
             <input 
@@ -158,17 +183,24 @@ const CompanyDetail = () => {
         </div>
     </div>
 
-    <div className="DataLogininputdivs">
+    <div className="DataLanddiv">
         <p className="Logininputdivs inputHeadings">Land</p>
         <div className="borders">
-            <input 
-                className="inputmainpages" 
-                type="text" 
-                value={company.land} 
-                readOnly 
-            />
+            <select className="inputmainpages">
+                <option value="Germany">Germany</option>
+                <option value="France">France</option>
+                <option value="Italy">Italy</option>
+                <option value="Spain">Spain</option>
+                <option value="Netherlands">Netherlands</option>
+                {/* Add more options as needed */}
+            </select>
         </div>
     </div>
+    </div>
+
+
+
+
 
     <div className="DataLogininputdivs">
         <p className="Logininputdivs inputHeadings">Identifikationsnummer</p>
@@ -302,7 +334,7 @@ const CompanyDetail = () => {
     </div>
     </div>
 
-<div className="right-half"> {/* Right content wrapper */}
+{/* <div className="right-half"> Right content wrapper */}
 
 
     <h2>Betriebliche Aktivitäten</h2>
@@ -376,6 +408,25 @@ const CompanyDetail = () => {
                 </table>
               
 
+
+                </div >
+
+
+                <div className="space_create">
+
+                <div 
+    className="borders clickableInspectionsdiv" 
+    onClick={handleCreateInspection} 
+    style={{ cursor: 'pointer' }} // Add cursor style to indicate it's clickable
+>
+    <h1 className="HomepageHeadingtext">
+        Neue <p className="HomepageHeadingtextparagraph">Inspektion erstellen</p>
+    </h1>
+    <div className="homePageIcon">
+        <AiOutlinePlus className="homeicon" />
+    </div>
+</div>
+
     <div className="borders clickableInspectionsdiv">
         <h1 className="HomepageHeadingtext">Aktive <p className="HomepageHeadingtextparagraph">Inspektion öffnen</p></h1>
         <div className="homePageIcon">
@@ -408,7 +459,7 @@ const CompanyDetail = () => {
 
 
     <div className="borders clickableInspectionsdiv">
-        <h1 className="HomepageHeadingtext">Räume <p className="HomepageHeadingtextparagraph">mangel</p></h1>
+        <h1 className="HomepageHeadingtext">Räume <p className="HomepageHeadingtextparagraph">mangen</p></h1>
         <div className="homePageIcon">
             <BiCube className="homeicon" />
         </div>
@@ -418,29 +469,21 @@ const CompanyDetail = () => {
 
 
     
-    <div 
-    className="borders clickableInspectionsdiv" 
-    onClick={handleCreateInspection} 
-    style={{ cursor: 'pointer' }} // Add cursor style to indicate it's clickable
->
-    <h1 className="HomepageHeadingtext">
-        Neue <p className="HomepageHeadingtextparagraph">Inspektion erstellen</p>
-    </h1>
-    <div className="homePageIcon">
-        <AiOutlinePlus className="homeicon" />
-    </div>
-</div>
+   
 
    
 
+</div>
+</div>
 
 
 
-</div> {/* Close right-half div */}
-        </div> {/* Close main container */}
+
+
+       
 
             
-        </div>
+      
         <Footer />
         </>
     );

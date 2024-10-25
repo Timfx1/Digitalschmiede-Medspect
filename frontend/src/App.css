@@ -1,10 +1,42 @@
+/* * {
+  padding: 0;
+  margin: 0 auto;
+  border: none;
+  box-sizing: border-box;
+
+} */
+
 * {
   padding: 0;
   margin: 0 auto;
   border: none;
   box-sizing: border-box;
-  background-color: #F8F8F8;
 }
+
+/* Styles for all input fields */
+input {
+  width: 100%; /* Make all inputs take the full width of their container */
+  padding: 12px; /* Increase padding for all input fields */
+  font-size: 16px; /* Set a comfortable font size */
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 4px; /* Round the corners */
+}
+
+/* Optionally, you can specifically target search inputs if they have a unique class */
+.search-input { 
+  max-width: 600px; /* Set a maximum width for search inputs */
+}
+
+/* Styles for focused inputs */
+input:focus {
+  border-color: #007BFF; /* Change border color on focus */
+  outline: none; /* Remove the default outline */
+}
+
+
+
+
+
 
 body {
   text-align: left;
@@ -148,10 +180,42 @@ body {
   background-color: #ffffff;
 }
 
-.inputmainpages {
+/* .inputmainpages {
   color: #8D8D8D;
   background-color: white;
+} */
+
+.inputmainpages {
+  width: 100%; /* Adjust width as needed */
+  padding: 10px; /* Add padding for aesthetics */
+  border: 1px solid #ccc; /* Border style */
+  border-radius: 4px; /* Rounded corners */
 }
+
+.suggestions-dropdown {
+  border: 1px solid #ccc;
+  background-color: white;
+  position: absolute; /* Position dropdown */
+  z-index: 1000; /* Ensure dropdown appears above other elements */
+}
+
+.suggestion-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0; /* Highlight on hover */
+}
+
+
+
+
+
+
+
+
+
 
 .inputHeadings {
   margin-left: 10px;
@@ -312,9 +376,23 @@ h1 {
 
 .AItopImage {
   display: flex;
-  margin: 20px;
-  padding: 10px;
+  justify-content: space-between; /* Space out the logo and button */
+  align-items: center;
+  padding: 20px;
+  background-color: #f9f9f9;
 }
+
+
+.AIlogoImgae {
+  display: flex;
+  align-items: center;
+}
+
+logoImage {
+  max-width: 100px; /* Ensure the logo has a reasonable size */
+  margin-right: 20px;
+}
+
 
 .AIbutton {
   color: black;
@@ -322,6 +400,11 @@ h1 {
   background-color: white;
 
 }
+
+
+
+
+
 
 .AIInputMain {
   display: flex;
@@ -338,18 +421,54 @@ h1 {
   overflow: hidden;
 }
 
-.AIlogoImgae {
+/* .AIlogoImgae {
   margin: 0;
   width: 80%;
-}
+  
+} */
 
-.AIsearchbuttondiv {
+/* .AIsearchbuttondiv {
   display: flex;
   justify-content: center;
   align-items: flex-end;
+} */
+
+
+
+.AIsearchbuttondiv .AIbutton {
+  background-color: #007BFF;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.AIhomeIput {
+.AIsearchbuttondiv .AIbutton:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.AIsearchbuttondiv .AIbutton svg {
+  fill: white;
+}
+
+.AIsearchbuttondiv .AIarrowIcon {
+  margin-left: 8px;
+  font-size: 18px;
+  color: white;
+}
+
+
+
+
+
+
+
+/* .AIhomeIput {
   margin: 25px;
   background-color: #ffffff;
   padding: 10px;
@@ -374,7 +493,7 @@ h1 {
   right: 10px;
   transform: translateY(-50%);
   color: #8D8D8D;
-}
+} */
 
 .Datenmain {
   display: flex;
@@ -400,7 +519,7 @@ h1 {
   gap: 10px;
   width: 100%;
   background-color: #ffffff;
-  height: 100%;
+ 
 }
 .DataLogininputdivs {
   background-color: #ffffff;
@@ -511,3 +630,115 @@ th {
   background-color: #f2f2f2;
 }
 
+.flex-container {
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+  gap: 10 px;
+}
+
+.left-half {
+  width: 50%; /* Adjust width as needed */
+  padding: 20px;
+  border-right: 1px solid #ddd; /* Optional for visual separation */
+}
+
+.right-half {
+  width: 50%; /* Adjust width as needed */
+  padding: 20px;
+}
+
+.right_screen{
+
+  width:60%
+}
+
+.space_create{
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+.grey{
+  margin-left: 10px; 
+  background-color: #f8f8f8;
+
+}
+
+
+
+
+.findings-section {
+  margin-bottom: 10px; /* Reduce space between each partition */
+  padding-left: 20px;  /* Add padding to move content away from the left edge */
+  padding-right: 20px; /* Optional: Add padding on the right for symmetry */
+}
+
+.findings-label {
+  display: block; /* Ensure the label is on top */
+  margin-bottom: 5px; /* Reduce space between label and textarea */
+  font-weight: bold; /* Make label bold */
+}
+
+.findings-textarea {
+  width: 100%; /* Make textarea take full width */
+  height: 100px; /* Adjust height as needed */
+  padding: 10px;
+  font-size: 16px; /* Adjust font size */
+  border-radius: 5px;
+  border: 1px solid #ccc; /* Border styling */
+  box-sizing: border-box; /* Ensure padding is included in width calculation */
+}
+
+.findings-textarea:focus {
+  outline: none;
+  border-color: #007BFF; /* Highlight the textarea on focus */
+}
+
+.container {
+  padding: 0 30px; /* Add padding to move content away from screen edges */
+}
+
+.findings-input {
+  width: 100%; /* Full width for input */
+  padding: 10px; /* Padding for spacing */
+  font-size: 16px; /* Font size */
+  border-radius: 5px; /* Rounded corners */
+  border: 1px solid #ccc; /* Border style */
+}
+
+.findings-input:focus {
+  outline: none; /* Remove default focus outline */
+  border-color: #007BFF; /* Change border color on focus */
+}
+
+
+.sticky-button-container {
+  position: fixed; /* Fixed position to keep buttons always visible */
+  bottom: 20px; /* Distance from the bottom of the viewport */
+  left: 50%; /* Start from the middle of the viewport */
+  transform: translateX(-50%); /* Offset back to center */
+  display: flex; /* Align buttons horizontally */
+  gap: 10px; /* Space between buttons */
+  padding: 10px; /* Padding around the container */
+  z-index: 1000; /* Ensure it stays above other content */
+}
+
+.action-button {
+  background-color: #007BFF; /* Blue background */
+  color: white; /* White text */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 20px; /* Padding for size */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Change cursor on hover */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+/* Change color on hover */
+.action-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: translateY(-10px); /* Move up on hover */
+}

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from django.contrib import admin
+
 from .models import Company, Inspection
 
 class CompanyAdmin(admin.ModelAdmin):
@@ -14,4 +14,5 @@ admin.site.register(Company, CompanyAdmin)
 
 @admin.register(Inspection)
 class InspectionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'company', 'inspection_date', 'inspector_name', 'notes')  # Display these fields in the list view
+    # Use '__all__' to automatically include all fields from the model
+    list_display = [field.name for field in Inspection._meta.get_fields()]
