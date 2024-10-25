@@ -24,7 +24,7 @@ class InspectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Inspection
         fields = [
-           # 'company',  # Include this if you want to return it in responses
+            'company',  # Include this if you want to return it in responses
             'inspection_date',
             'inspector_name',
             'team_lead',

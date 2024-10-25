@@ -1,11 +1,11 @@
 from django.db import models
 
+# companies/models.py
+
 class Company(models.Model):
     aktenzeichen = models.CharField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     address = models.TextField()
-    #aktenzeichen = models.CharField(max_length=255, null=True, blank=True)
-    #benutzername = models.CharField(max_length=255, null=True, blank=True)
     strasse = models.CharField(max_length=255, null=True, blank=True)
     nummer = models.CharField(max_length=255, null=True, blank=True)
     postzahl = models.CharField(max_length=255, null=True, blank=True)
@@ -21,17 +21,18 @@ class Company(models.Model):
     fax = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField(max_length=255, null=True, blank=True)
     notfallnummer = models.CharField(max_length=255, null=True, blank=True)
-   
 
     def __str__(self):
-        return self.name
+        # Show both the company name and aktenzeichen for clear identification
+        return f"{self.name} ({self.aktenzeichen})"
 
 # inspections/models.py
 
 
+# inspections/models.py
+
 class Inspection(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, to_field='aktenzeichen')
-   # company = models.ForeignKey(Company, related_name='inspections', on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, to_field='aktenzeichen')
     inspection_date = models.DateField()
     inspector_name = models.CharField(max_length=255)
     team_lead = models.CharField(max_length=255, null=True, blank=True)
@@ -40,7 +41,6 @@ class Inspection(models.Model):
     reference_number = models.CharField(max_length=255, null=True, blank=True)
     introduction = models.TextField(null=True, blank=True)
     smf_info = models.TextField(null=True, blank=True)
-   # non_eu_inspection = models.TextField(null=True, blank=True)  # If this is needed
 
     quality_management = models.TextField(null=True, blank=True)
     personnel = models.TextField(null=True, blank=True)
@@ -60,11 +60,10 @@ class Inspection(models.Model):
     findings = models.TextField(null=True, blank=True)
     active_substances = models.TextField(null=True, blank=True)
     conclusions = models.TextField(null=True, blank=True)
-   # findings_summary = models.JSONField(null=True, blank=True)  # Store summary as JSON
     critical_errors = models.TextField(null=True, blank=True)
     serious_errors = models.TextField(null=True, blank=True)
     other_errors = models.TextField(null=True, blank=True)
     remarks = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f"Inspection for {self.company.name} on {self.inspection_date}"
+        return f"Inspection for {self.company} on {self.inspection_date}"

@@ -6,13 +6,20 @@ import axios from 'axios';
 import Navbar from './Navbar'; 
 import Footer from './Footers';
 import logo from './image/Logo.png'; 
+//import { Document, Packer, Paragraph, TextRun } from 'docx'; // Import necessary classes from docx
+import { Document, Packer, Paragraph, HeadingLevel } from 'docx';
+
+import { useLocation } from 'react-router-dom';
+
 
 
 const NewInspection = () => {
-  // State to hold list of companies and selected company details
-  const [companies, setCompanies] = useState([]); // List of companies fetched from backend
-  const [selectedCompany, setSelectedCompany] = useState(''); // Selected company name
-  const [aktenzeichen, setAktenzeichen] = useState(''); // Aktenzeichen associated with the selected company
+  const location = useLocation(); // Get the location object
+  const queryParams = new URLSearchParams(location.search);
+  const aktenzeichen = queryParams.get('aktenzeichen'); // Get the aktenzeichen from the URL
+
+  // State to hold company details
+  const [companyName, setCompanyName] = useState(''); // Company name from the previous page
   
   // State to hold the form data for inspection details
   const [inspectionData, setInspectionData] = useState({
@@ -47,28 +54,19 @@ const NewInspection = () => {
     remarks: '',
   });
 
-  // Fetch the company list when the component is mounted
+  // Fetch the company details using the Aktenzeichen
   useEffect(() => {
-    axios.get('http://localhost:8000/api/companies/') // Replace with your backend URL
-      .then(response => {
-        setCompanies(response.data); // Assuming the response returns a list of companies
-      })
-      .catch(error => {
-        console.error('Error fetching companies:', error);
-      });
-  }, []);
-
-  // Handle the company selection from the dropdown
-  const handleCompanyChange = (e) => {
-    const companyName = e.target.value;
-    setSelectedCompany(companyName);
-
-    // Find the Aktenzeichen of the selected company
-    const company = companies.find(c => c.company_name === companyName);
-    if (company) {
-      setAktenzeichen(company.aktenzeichen); // Set the Aktenzeichen
+    if (aktenzeichen) {
+      axios.get(`http://localhost:8000/api/companies?aktenzeichen=${aktenzeichen}`) // Adjust API endpoint as needed
+        .then(response => {
+          const company = response.data;
+          setCompanyName(company.company_name); // Assuming company data includes company_name
+        })
+        .catch(error => {
+          console.error('Error fetching company details:', error);
+        });
     }
-  };
+  }, [aktenzeichen]);
 
   // Handle form field change for inspection data
   const handleChange = (e) => {
@@ -82,14 +80,14 @@ const NewInspection = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Include the selected company's Aktenzeichen with the inspection data
+    // Include the Aktenzeichen with the inspection data
     const newInspection = {
       ...inspectionData,
       aktenzeichen // Pass the Aktenzeichen to link the inspection to the company
     };
 
     // Submit the inspection data to the backend
-    axios.post('http://localhost:8000/api/inspections/', newInspection) // Replace with your backend URL
+    axios.post('http://localhost:8000/api/inspections/', newInspection)
       .then(response => {
         console.log('Inspection created successfully:', response.data);
       })
@@ -98,18 +96,41 @@ const NewInspection = () => {
       });
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
+  // Function to download inspection details as a DOCX file
+  const downloadDocx = () => {
+    // Create a new Document instance
+    const doc = new Document({
+      sections: [{
+        properties: {},
+        children: [
+          new Paragraph({
+            text: `Inspection Report for: ${companyName}`,
+            heading: HeadingLevel.HEADING_1
+          }),
+          new Paragraph({
+            text: `Aktenzeichen: ${aktenzeichen}`,
+          }),
+          // Add other inspection data to the document
+          ...Object.entries(inspectionData).map(([key, value]) =>
+            new Paragraph(`${key}: ${value}`)
+          ),
+        ],
+      }],
+    });
+  
+    // Generate the blob and trigger the download
+    Packer.toBlob(doc).then(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Inspection_Report.docx';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }).catch(error => {
+      console.error('Error generating the document:', error);
+    });
+  };
+  
 // const NewInspection = () => {
 //   //const { companyId } = useParams(); // Get companyId from URL parameters
 //   // State to hold the form data for inspection details
@@ -149,15 +170,15 @@ const NewInspection = () => {
 
 
   
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
     
-//     // Update the specific field in the state using the name as the key
-//     setInspectionData({
-//       ...inspectionData,
-//       [name]: value,
-//     });
-//   };
+  //   // Update the specific field in the state using the name as the key
+  //   setInspectionData({
+  //     ...inspectionData,
+  //     [name]: value,
+  //   });
+  // };
   
 
 //   // Handle form submission to save inspection data
@@ -317,18 +338,11 @@ const NewInspection = () => {
 
 
              <form onSubmit={handleSubmit}>
-        {/* Company selection dropdown */}
-        <div>
-          <label>Company Name:</label>
-          <select value={selectedCompany} onChange={handleCompanyChange}>
-            <option value="">Select a company</option>
-            {companies.map(company => (
-              <option key={company.id} value={company.company_name}>
-                {company.company_name}
-              </option>
-            ))}
-          </select>
-        </div>
+      {/* Display the company name and Aktenzeichen directly */}
+      <h2>{companyName}</h2>
+      <p>Aktenzeichen: {aktenzeichen}</p>
+      
+    
 
 
 
@@ -775,7 +789,8 @@ const NewInspection = () => {
 
         
 {/* Submit button */}
-<button type="submit">Create Inspection</button>
+<button type="submit">Save Inspection</button>
+      <button type="button" onClick={downloadDocx}>Download DOCX</button>
       </form>
       <Footer />
     </div>

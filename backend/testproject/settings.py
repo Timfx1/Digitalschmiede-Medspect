@@ -55,6 +55,15 @@ MIDDLEWARE = [
 ]
 
 
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+}
+
+
+
+
 CORS_ALLOW_ALL_ORIGINS = True  # Allow all, or use CORS_ALLOWED_ORIGINS for specific ones
 
 ROOT_URLCONF = 'testproject.urls'
