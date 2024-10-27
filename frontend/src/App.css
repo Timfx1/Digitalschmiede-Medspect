@@ -716,15 +716,22 @@ th {
 
 
 .sticky-button-container {
-  position: fixed; /* Fixed position to keep buttons always visible */
-  bottom: 20px; /* Distance from the bottom of the viewport */
-  left: 50%; /* Start from the middle of the viewport */
-  transform: translateX(-50%); /* Offset back to center */
-  display: flex; /* Align buttons horizontally */
-  gap: 10px; /* Space between buttons */
-  padding: 10px; /* Padding around the container */
-  z-index: 1000; /* Ensure it stays above other content */
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  z-index: 1000;
+  opacity: 0; /* Start hidden */
+  transition: opacity 0.5s ease-in-out; /* Smooth fade transition */
 }
+
+.sticky-button-container.visible {
+  opacity: 1; /* Fully visible when scrolled into view */
+}
+
 
 .action-button {
   background-color: #007BFF; /* Blue background */

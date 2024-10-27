@@ -1,7 +1,6 @@
 
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 
-import { useParams } from 'react-router-dom'; // Import useParams if using URL parameters
 import axios from 'axios';
 import Navbar from './Navbar'; 
 import Footer from './Footers';
@@ -54,8 +53,10 @@ const NewInspection = () => {
     remarks: '',
   });
 
+  const [isVisible, setIsVisible] = useState(false);
   // Fetch the company details using the Aktenzeichen
   useEffect(() => {
+    
     if (aktenzeichen) {
       axios.get(`http://localhost:8000/api/companies?aktenzeichen=${aktenzeichen}`) // Adjust API endpoint as needed
         .then(response => {
@@ -68,6 +69,17 @@ const NewInspection = () => {
     }
   }, [aktenzeichen]);
 
+  // Toggle button visibility based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsVisible(scrollPosition > 100);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Handle form field change for inspection data
   const handleChange = (e) => {
     setInspectionData({
@@ -75,6 +87,8 @@ const NewInspection = () => {
       [e.target.name]: e.target.value
     });
   };
+
+  
 
   // Handle form submission to create a new inspection
   const handleSubmit = (e) => {
@@ -131,197 +145,6 @@ const NewInspection = () => {
     });
   };
   
-// const NewInspection = () => {
-//   //const { companyId } = useParams(); // Get companyId from URL parameters
-//   // State to hold the form data for inspection details
-  
-//   const [inspectionData, setInspectionData] = useState({
-//     inspection_date: '',
-//     inspector_name: '',
-//     team_lead: '',
-//     additional_inspectors: '',
-//     authority: '',
-//     reference_number: '',
-//     introduction: '',
-//     smf_info: '',
-//     previous_inspection: '',
-//     findings: '',
-//     active_substances: '',
-//     conclusions: '',
-//     quality_management: '',
-//     personnel: '',
-//     equipment: '',
-//     documentation: '',
-//     production: '',
-//     quality_control: '',
-//     contract_testing: '',
-//     complaints: '',
-//     self_inspection: '',
-//     storage: '',
-//     other_aspects: '',
-//     site_description: '',
-//     samples_taken: '',
-   
-//     critical_errors: '',
-//     serious_errors: '',
-//     other_errors: '',
-//     remarks: '',
-//   });
-
-
-  
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-    
-  //   // Update the specific field in the state using the name as the key
-  //   setInspectionData({
-  //     ...inspectionData,
-  //     [name]: value,
-  //   });
-  // };
-  
-
-//   // Handle form submission to save inspection data
-// const handleSave = async (e) => {
-//   e.preventDefault(); // Prevent default form submission
-
-//   try {
-//     const response = await axios.post('http://127.0.0.1:8000/api/inspections/', inspectionData); // Send a POST request to the backend
-//     if (response.status === 201) {
-//       alert('Inspection created and saved successfully!'); // Notify the user on success
-//       // Optionally reset the form or redirect
-//       setInspectionData({
-//         inspection_date: '',
-//         inspector_name: '',
-//         team_lead: '',
-//         additional_inspectors: '',
-//         authority: '',
-//         reference_number: '',
-//         introduction: '',
-//         smf_info: '',
-//         previous_inspection: '',
-//         findings: '',
-//         active_substances: '',
-//         conclusions: '',
-//         quality_management: '',
-//         personnel: '',
-//         equipment: '',
-//         documentation: '',
-//         production: '',
-//         quality_control: '',
-//         contract_testing: '',
-//         complaints: '',
-//         self_inspection: '',
-//         storage: '',
-//         other_aspects: '',
-//         site_description: '',
-//         samples_taken: '',
-//         critical_errors: '',
-//         serious_errors: '',
-//         other_errors: '',
-//         remarks: '',
-//       });
-//     } else {
-//       alert('Something went wrong while saving the inspection!');
-//     }
-//   } catch (error) {
-//     console.error('Error creating inspection!', error);
-//     alert('Error creating inspection! Please try again.');
-//   }
-// };
-
-// // Download the report as DOCX
-// const handleDownload = async (e) => {
-//   e.preventDefault(); // Prevent default form behavior
-
-//   try {
-//     const response = await axios.post(
-//       'http://127.0.0.1:8000/api/generate-inspection-doc/', 
-//       inspectionData, 
-//       { responseType: 'blob' }  // Indicating that we're expecting binary data (blob)
-//     );
-
-//     // Create a URL for the downloaded file
-//     const url = window.URL.createObjectURL(new Blob([response.data]));
-
-//     // Create a temporary anchor element
-//     const link = document.createElement('a');
-//     link.href = url;
-//     link.setAttribute('download', 'GMP_Inspektionsbericht.docx'); // Name of the downloaded file
-
-//     // Append the anchor to the document and trigger the download
-//     document.body.appendChild(link);
-//     link.click();
-
-//     // Clean up by removing the temporary link element
-//     link.remove();
-
-//   } catch (error) {
-//     console.error('Error generating report', error);
-//     alert('Error generating report. Please try again.');
-//   }
-// };
-
-
-// // Handle form submission to save inspection data
-//   const handleSave = async (e) => {
-//     e.preventDefault(); // Prevent default form submission
-//     try {
-//       await axios.post('http://127.0.0.1:8000/api/inspections/', inspectionData); // Save to the backend
-//       alert('Inspection created and saved successfully!'); // Notify the user
-//     } catch (error) {
-//       console.error('Error creating inspection!', error); // Log any errors
-//     }
-//   };
-
-
-
-
-  // // Save inspection data to backend
-  // const handleSave = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await axios.post('http://127.0.0.1:8000/api/inspections/', inspectionData);
-  //     alert('Inspection data saved successfully!');
-
-
-
-
-  //     // Now generate the inspection document
-  //     const response = await axios.post('http://127.0.0.1:8000/api/generate-inspection-doc/', inspectionData, {
-  //       responseType: 'blob',  // Important for handling file downloads
-  //   });
-
-
-  //    // Create a link to download the file
-  //    const url = window.URL.createObjectURL(new Blob([response.data]));
-  //    const link = document.createElement('a');
-  //    link.href = url;
-  //    link.setAttribute('download', 'inspection_report.docx'); // Specify the file name
-  //    document.body.appendChild(link);
-  //    link.click();
-  //    link.remove();
-
-
-  // // Download the report as DOCX
-  // const handleDownload = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post('http://127.0.0.1:8000/api/generate-inspection-doc/', inspectionData, {
-  //       responseType: 'blob',
-  //     });
-  //     const url = window.URL.createObjectURL(new Blob([response.data]));
-  //     const link = document.createElement('a');
-  //     link.href = url;
-  //     link.setAttribute('download', 'GMP_Inspektionsbericht.docx');
-  //     document.body.appendChild(link);
-  //     link.click();
-  //     link.remove();
-  //   } catch (error) {
-  //     console.error('Error generating report', error);
-  //   }
-  // };
-
 
 
 
@@ -698,26 +521,7 @@ const NewInspection = () => {
     />
   </label>
 </div>
-          {/* <div>
-  <h2>Summary of Findings</h2>
-  {Object.keys(inspectionData.findings_summary).map((section, index) => (
-    <div key={index} className="findings-section">
-      <label className="findings-label">{section.replace('_', ' ')}:</label>
-      <textarea
-        name={section}
-        value={inspectionData.findings_summary[section]}
-        onChange={(e) =>
-          setInspectionData({
-            ...inspectionData,
-            findings_summary: { ...inspectionData.findings_summary, [section]: e.target.value },
-          })
-        }
-        placeholder={`Details for ${section.replace('_', ' ')}`}
-        className="findings-textarea"
-      />
-    </div>
-  ))}
-</div> */}
+          
 
 {/* Critical Errors */}
 <div className="findings-section">
@@ -771,26 +575,12 @@ const NewInspection = () => {
 
 
 
-{/* Non-EU Inspection and Previous Inspection Sections
-<div className="findings-section">
-  <label>
-    Previous Inspection:
-    <textarea
-      name="previous_inspection"
-      value={inspectionData.previous_inspection}
-      onChange={handleChange}
-      placeholder="Bericht über vorhergehende Inspektion"
-      className="findings-textarea" // Ensures consistent textarea styling
-    />
-  </label>
-</div> */}
-
-     
-
         
 {/* Submit button */}
-<button type="submit">Save Inspection</button>
-      <button type="button" onClick={downloadDocx}>Download DOCX</button>
+<div className={`sticky-button-container ${isVisible ? 'visible' : ''}`}>
+      <button className="action-button" type="submit">Save Inspection</button>
+      <button className="action-button" type="button" onClick={downloadDocx}>Download DOCX</button>
+    </div>
       </form>
       <Footer />
     </div>
