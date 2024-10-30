@@ -93,7 +93,7 @@ const NewInspection = () => {
   // Handle form submission to create a new inspection
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    
     // Include the Aktenzeichen with the inspection data
     const newInspection = {
       ...inspectionData,

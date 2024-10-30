@@ -90,37 +90,24 @@ const CompanyDetail = () => {
     return (
         <>
           <Navbar />
-
-         
-
-          <div className="AItopImage">
+           <div className="AItopImage">
                 <div className="AIlogoImgae">
                 <img src={logo} alt="Logo" className="logoImage" />
                 <div><h1 className="grey">{company.name}</h1></div>
                 </div>
-
-               
-
-
-
-                <div className="AIsearchbuttondiv">
-  <button onClick={handleNavigate} className="AIbutton">
-    Back Home <FaArrowRight className="AIarrowIcon" />
-  </button>
-</div>
-
-
-
-                </div>
+             <div className="AIsearchbuttondiv">
+                <button onClick={handleNavigate} className="AIbutton">
+                     Back Home <FaArrowRight className="AIarrowIcon" />
+                </button>
+            </div>
+    </div>
 
                
                 <div class="flex-container">
                     <div className="right_screen">
 
                 <div className="DatenLogininput">
-    {/* Company Name */}
-    {/* <h1 className="Logininputdivs">{company.name}</h1> */}
-    {/* Company Details */}
+   
     <div className="DataLogininputdivs">
         <p className="Logininputdivs inputHeadings">Aktenzeichen</p>
         <div className="borders">
@@ -133,17 +120,7 @@ const CompanyDetail = () => {
         </div>
     </div>
 
-    {/* <div className="DataLogininputdivs">
-        <p className="Logininputdivs inputHeadings">Benutzername</p>
-        <div className="borders">
-            <input 
-                className="inputmainpages" 
-                type="text" 
-                value={company.benutzername} 
-                readOnly 
-            />
-        </div>
-    </div> */}
+   
 
     <div className="DataLogininputdivs DataStreetdiv">
         <div className="DataStreetdiv1">
@@ -435,19 +412,17 @@ const CompanyDetail = () => {
     </div>
 
     <div className="borders DataclickableInspectionsdiv">
-        <h1 className="HomepageHeadingtext">Inspektionsberichte </h1>
-        <div className="homeIput">
-            <div className="searchInput">
-                <p className="Logininputdivs inputHeadings"></p>
-                <div className="borders HomepageInput">
-                    <input type="text" placeholder="Bericht wählen" className="inputmainpages" />
-                </div>
-            </div>
-            <div className="searchbuttondiv">
-                <button className="searchButton">Öffnen</button>
+    <h1 className="HomepageHeadingtext">Inspektionsberichte</h1>
+    <div className="homeInput">
+        <div className="searchInput">
+            <p className="Logininputdivs inputHeadings"></p>
+            <div className="borders HomepageInput">
+                <input type="text" placeholder="Bericht wählen" className="inputmainpages" />
             </div>
         </div>
+        <button className="searchButton">Öffnen</button> {/* Moved button inside homeInput */}
     </div>
+</div>
 
 
 

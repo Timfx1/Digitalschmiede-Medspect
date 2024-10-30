@@ -20,6 +20,7 @@ class InspectionViewSet(viewsets.ModelViewSet):
     serializer_class = InspectionSerializer
 
     def create(self, request, *args, **kwargs):
+        
         aktenzeichen = request.data.get('aktenzeichen')
         try:
             company = Company.objects.get(aktenzeichen=aktenzeichen)
